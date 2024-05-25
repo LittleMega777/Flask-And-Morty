@@ -1,17 +1,16 @@
 from flask import Flask, render_template
 from random import randint
+import requests
 
 app = Flask(__name__)
 
+def sorteio_personagem():
+  resposta = requests.get(f"https://rickandmortyapi.com/api/character/{randint(1, 826)}", verify=False)
+  return resposta.json()["image"]
+
 @app.route('/')
 def hello():
-    messagem_app_py = "Hello World"
-    return render_template('index.html', message=messagem_app_py)
-
-@app.route('/sorteio')
-def hello1():
-    message = randint(1, 800) # random + int = inteiro aleatorio
-    return render_template('index.html', message=message)
+    return render_template('index.html', url=sorteio_personagem())
 
 if __name__ == '__main__':
     app.run(debug=True)
