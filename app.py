@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from random import randint
 import requests
 
@@ -11,6 +11,11 @@ def sorteio_personagem():
 @app.route('/')
 def hello():
     return render_template('index.html', url=sorteio_personagem())
+
+@app.route('/', methods=['POST'])
+def sorteio():
+   button_value = request.form['button']
+   return render_template('index.html', url=sorteio_personagem())
 
 if __name__ == '__main__':
     app.run(debug=True)
