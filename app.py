@@ -1,6 +1,9 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, jsonify
 from random import randint
 import requests
+import urllib3
+
+urllib3.disable_warnings()
 
 app = Flask(__name__)
 
@@ -14,10 +17,10 @@ personagem = sorteio_personagem()
 def hello():
     return render_template('index.html', url=personagem['image'], name=personagem['name'], status=personagem['status'], especie=personagem['species'])
 
-@app.route('/', methods=['POST'])
+@app.route('/get_random_data', methods=['GET'])
 def sorteio():
-   personagem = sorteio_personagem()
-   return render_template('index.html', url=personagem['image'], name=personagem['name'], status=personagem['status'], especie=personagem['species'])
+   data = sorteio_personagem()
+   return jsonify(data)
 
 if __name__ == '__main__':
     app.run(debug=True)
