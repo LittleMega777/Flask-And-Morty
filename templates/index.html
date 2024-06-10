@@ -3,16 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hello World</title>
+    <title>FlaskAndMorty</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <form action="/" method="POST">
-        <input type="submit" name="button" value="Random" id="random_button">
-    </form>
-    <img src={{url}} alt="Imagem Aleatoria">
+    <button id="random_button">Random</button>
+    <img src={{url}} id="random_img">
     <p id="name_variable">nome = {{name}} </p>
     <p id="status_variable">status = {{status}}</p>
-    <p id="status_variable">especie = {{especie}}</p>
+    <p id="specie_variable">especie = {{especie}}</p>
+    <script src="{{url_for('static', filename='script.js')}}"></script>
 </body>
 </html>
