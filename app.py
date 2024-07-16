@@ -1,21 +1,23 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, jsonify
 from random import randint
 import requests
+import urllib3
+from models import personagem
+urllib3.disable_warnings()
 
 app = Flask(__name__)
 
-def sorteio_personagem():
-  resposta = requests.get(f"https://rickandmortyapi.com/api/character/{randint(1, 826)}", verify=False)
-  return resposta.json()["image"]
+character = personagem.RandomCharacter()
 
 @app.route('/')
 def hello():
-    return render_template('index.html', url=sorteio_personagem())
+    return render_template('index.html', url=character.img, name=character.name,
+                            status=character.status, especie=character.specie)
 
-@app.route('/', methods=['POST'])
+@app.route('/get_random_data', methods=['GET'])
 def sorteio():
-   button_value = request.form['button']
-   return render_template('index.html', url=sorteio_personagem())
+   data = character.sorteio_personagem()
+   return jsonify(data)
 
 if __name__ == '__main__':
     app.run(debug=True)
